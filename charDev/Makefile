@@ -1,4 +1,4 @@
-KERN_DIR = /Users/hong/study/codes/linux/linux-6.6.42
+KERN_DIR?= /lib/modules/$(shell uname -r)/build
 
 ifneq ($(KERNELRELEASE),)
 	obj-m := charDev.o
