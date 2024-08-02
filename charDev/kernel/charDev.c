@@ -5,13 +5,11 @@
 
 static int __init charDev_init(void)
 {
-    pr_info("char dev init\n");
     return 0;
 }
 
 static void __exit charDev_exit(void)
 {
-    pr_info("char dev exit\n");
 }
 
 module_init(charDev_init);
