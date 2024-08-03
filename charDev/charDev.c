@@ -10,7 +10,6 @@ static int __init charDev_init(void)
 
 static void __exit charDev_exit(void)
 {
-
 }
 
 module_init(charDev_init);
