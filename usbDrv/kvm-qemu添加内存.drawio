@@ -1,9 +1,33 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" version="24.7.6">
   <diagram name="第 1 页" id="hw7YY8da2ZbIFUqbdpeP">
-    <mxGraphModel>
+    <mxGraphModel dx="1202" dy="331" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="E4EquZNwHRFTvcGyE8CQ-1" target="E4EquZNwHRFTvcGyE8CQ-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-1" value="qemu_init" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="45" y="47" width="111" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="E4EquZNwHRFTvcGyE8CQ-2" target="E4EquZNwHRFTvcGyE8CQ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-2" value="cpu_exec_init_all" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="100" width="125" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-4" value="memory_map_init" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="266" y="156" width="125" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="E4EquZNwHRFTvcGyE8CQ-7" target="E4EquZNwHRFTvcGyE8CQ-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-7" value="kvm_init" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="488" y="47" width="111" height="27" as="geometry" />
+        </mxCell>
+        <mxCell id="E4EquZNwHRFTvcGyE8CQ-8" value="kvm_memory_listener_register" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="588" y="105" width="111" height="27" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
