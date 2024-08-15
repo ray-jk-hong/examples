@@ -1,0 +1,1 @@
+cmd_/media/psf/codes/linux-samples/linux-samples/char_dev/mychar.ko := ld -r -EL  -maarch64elf --build-id=sha1  -T scripts/module.lds -o /media/psf/codes/linux-samples/linux-samples/char_dev/mychar.ko /media/psf/codes/linux-samples/linux-samples/char_dev/mychar.o /media/psf/codes/linux-samples/linux-samples/char_dev/mychar.mod.o;  true
