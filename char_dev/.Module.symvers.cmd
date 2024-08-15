@@ -1,1 +1,0 @@
-cmd_/media/psf/codes/linux-samples/linux-samples/char_dev/Module.symvers := sed 's/\.ko$$/\.o/' /media/psf/codes/linux-samples/linux-samples/char_dev/modules.order | scripts/mod/modpost -m -a  -o /media/psf/codes/linux-samples/linux-samples/char_dev/Module.symvers -e -i Module.symvers   -T -

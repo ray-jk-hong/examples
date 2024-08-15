@@ -1,1 +1,0 @@
-cmd_/media/psf/codes/linux-samples/linux-samples/char_dev/modules.order := {   echo /media/psf/codes/linux-samples/linux-samples/char_dev/mychar.ko; :; } | awk '!x[$$0]++' - > /media/psf/codes/linux-samples/linux-samples/char_dev/modules.order

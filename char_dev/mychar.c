@@ -52,5 +52,3 @@ module_init(my_inint);
 module_exit(my_exit);
 
 MODULE_LICENSE("Dual BSD/GPL");
-MODULE_AUTHOR("Ray.jk.hong");
-
