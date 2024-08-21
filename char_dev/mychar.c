@@ -34,10 +34,9 @@ static int __init my_inint(void)
     misc_dev.mode = 0600;
     ret = misc_register(&misc_dev);
     if (ret != 0) {
+        pr_err("Misc register fail. (ret=%d)\n", ret);
         return ret;
     }
-
-    pr_info("init\n");
 
     return 0;
 }
@@ -45,7 +44,6 @@ static int __init my_inint(void)
 static void __exit my_exit(void)
 {
     misc_deregister(&misc_dev);
-    pr_info("exit\n");
 }
 
 module_init(my_inint);
