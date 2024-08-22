@@ -25,7 +25,7 @@ static ssize_t my_write(struct file *file, const char __user *buf,
     return 0;
 }
 
-static loff_t my_lseek(struct file *file, loff_t offset, int orig) 
+static loff_t my_lseek(struct file *file, loff_t offset, int orig)
 {
     return 0;
 }
