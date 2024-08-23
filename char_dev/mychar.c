@@ -42,7 +42,7 @@ static const struct file_operations my_fops = {
     .release = my_release,
     .read = my_read,
     .write = my_write,
-    .llseek = my_seek
+    .llseek = my_lseek
 };
 
 static int __init my_inint(void)
