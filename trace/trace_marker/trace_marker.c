@@ -43,14 +43,17 @@ static void trace_close(void)
 
 int main(int argc, char *argv[])
 {
-    int ret;
+    int ret, i;
 
     ret = trace_open();
     if (ret < 0) {
         printf("trace open fail\n");
         return ret;
     }
-    trace_write("xxxxxxxxxxxxxyyyyyyyyyyyy\n");
+    for (i = 0; i < 10; i++) {
+        trace_write(" [%s] trace cnt = %d\n", __func__, i);
+        usleep(500 * 1000);
+    }
     trace_close();
 
     return 0;
