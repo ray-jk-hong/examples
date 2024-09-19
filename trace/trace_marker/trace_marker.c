@@ -11,16 +11,16 @@ static void trace_write(const char *fmt, ...)
     va_list ap;
     char buf[256];
     int n;
-
+    
     if (trace_fd < 0) {
         printf("trace open fail\n");
         return;
     }
     va_start(ap, fmt);
-	n = vsnprintf(buf, 256, fmt, ap);
-	va_end(ap);
-
-	write(trace_fd, buf, n);    
+    n = vsnprintf(buf, 256, fmt, ap);
+    va_end(ap);
+    
+    write(trace_fd, buf, n);    
 }
 
 static int trace_open(void)
