@@ -1,0 +1,1 @@
+cmd_/media/psf/Home/study/codes/linux-samples/linux-samples/kprobe/kprobe_kernel.mod := { echo  /media/psf/Home/study/codes/linux-samples/linux-samples/kprobe/kprobe_kernel.o;  echo; } > /media/psf/Home/study/codes/linux-samples/linux-samples/kprobe/kprobe_kernel.mod

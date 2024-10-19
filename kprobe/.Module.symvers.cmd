@@ -1,0 +1,1 @@
+cmd_/media/psf/Home/study/codes/linux-samples/linux-samples/kprobe/Module.symvers := sed 's/\.ko$$/\.o/' /media/psf/Home/study/codes/linux-samples/linux-samples/kprobe/modules.order | scripts/mod/modpost -m -a  -o /media/psf/Home/study/codes/linux-samples/linux-samples/kprobe/Module.symvers -e -i Module.symvers   -T -
