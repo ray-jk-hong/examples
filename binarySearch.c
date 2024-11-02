@@ -22,6 +22,8 @@ int binarySearch(Range arr[], int left, int right, int targetAddress) {
     return -1; // 未找到，返回-1
 }
 
+要按地址先找到item，再去判断范围是否合法！！！！！！！
+
 int main() {
     // 示例数组
     Range ranges[] = {
