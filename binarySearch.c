@@ -1,50 +1,55 @@
 #include <stdio.h>
 
+typedef unsigned int u32;
+
 // 定义结构体，包含地址和长度
-typedef struct {
-    int address; // 地址
-    int length;  // 长度
-} Range;
+typedef struct uop_item {
+    unsigned long addr;
+    u32 len;
+};
+
+// 示例数组
+struct uop_item g_item[] = {
+        {100, 50},
+};
 
 // 二分查找函数
-int binarySearch(Range arr[], int left, int right, int targetAddress) {
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        // 检查目标地址是否在当前结构体的地址范围内
-        if (targetAddress >= arr[mid].address && targetAddress <= (arr[mid].address + arr[mid].length - 1)) {
-            return mid; // 找到，返回索引
-        } else if (targetAddress < arr[mid].address) {
-            right = mid - 1; // 在左半边继续查找
+int binarySearch(unsigned long addr, u32 len)
+{
+    u32 left = 0, right = sizeof(g_item) / sizeof(g_item[0]);
+
+    do {
+        u32 index = (left + right) >> 1;
+        struct uop_item *item = &g_item[index];
+
+        if (addr >= (item->addr + item->len)) {
+            left = index + 1;
+        } else if ((addr + len) <= item->addr) {
+            right = index;
         } else {
-            left = mid + 1; // 在右半边继续查找
+            return index;
         }
-    }
+    } while (left < right);
+
     return -1; // 未找到，返回-1
 }
 
-要按地址先找到item，再去判断范围是否合法！！！！！！！
+1. 有重叠地址的时候就显示能找到，所以添加的时候可以使用以防止地址叠加
+2. 但读写的时候，只有部分重叠地址的也显示能找到，所以拿到item之后还要检查地址是否合法
 
-int main() {
-    // 示例数组
-    Range ranges[] = {
-        {100, 50},
-        {200, 30},
-        {250, 20},
-        {300, 40}
-    };
-    int n = sizeof(ranges) / sizeof(ranges[0]);
-    
+int main(int argc, char *argv[])
+{
     // 要查找的地址
-    int targetAddress = 225;
-    
+    int targetAddress = 95;
+
     // 调用二分查找函数
-    int index = binarySearch(ranges, 0, n - 1, targetAddress);
-    
+    int index = binarySearch(targetAddress, 2);
+
     if (index != -1) {
         printf("找到包含地址 %d 的结构体，索引为：%d\n", targetAddress, index);
     } else {
         printf("没有找到包含地址 %d 的结构体\n", targetAddress);
     }
-    
+
     return 0;
 }
