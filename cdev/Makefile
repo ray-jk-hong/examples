@@ -1,7 +1,7 @@
 KERN_DIR?= /lib/modules/$(shell uname -r)/build
 
 ifneq ($(KERNELRELEASE),)
-	obj-m := cdev.o
+	obj-m := cdev_min.o
     EXTRA_CFLAGS+=-I${PWD}
 else
 	PWD := $(shell pwd)
