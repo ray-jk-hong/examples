@@ -1,7 +1,7 @@
 KERN_DIR?= /lib/modules/$(shell uname -r)/build
 
 ifneq ($(KERNELRELEASE),)
-	obj-m := kobject.o
+	obj-m := driver.o
     EXTRA_CFLAGS+=-I${PWD}
 else
 	PWD := $(shell pwd)
