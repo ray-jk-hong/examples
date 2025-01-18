@@ -17,11 +17,19 @@ static int __init mdev_mod_init(void)
         return ret;
     }
 
+    ret = mdev_dev_init();
+    if (ret != 0) {
+        mdev_drv_uninit();
+        mdev_bus_uninit();
+        return ret;
+    }
+
     return 0;
 }
 
 static void __exit mdev_mod_exit(void) 
 {
+    mdev_dev_uninit();
     mdev_drv_uninit();
     mdev_bus_uninit();
 }
