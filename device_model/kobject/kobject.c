@@ -7,6 +7,7 @@
 
 static int __init kobject_mod_init(void)
 {
+    
     return 0;
 }
 
