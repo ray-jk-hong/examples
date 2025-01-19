@@ -7,7 +7,6 @@ static int __init mdev_mod_init(void)
 {
     int ret;
 
-    printk(KERN_ERR "Mdev init.\n");
     ret = mdev_bus_init();
     if (ret != 0) {
         return ret;
