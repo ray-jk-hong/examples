@@ -2,9 +2,23 @@
 #include "mdev_bus.h"
 #include "mdev_driver.h"
 
-static struct mdev_driver mdev_drv;
+static int mdev_drv_probe(struct mdev_device *dev)
+{
+    pr_info("Mdev drv probe\n");
+    return 0;
+}
 
-int __init mdev_drv_init(void)
+static void mdev_drv_remove(struct mdev_device *dev)
+{
+    pr_info("Mdev drv remove\n");
+}
+
+static struct mdev_driver mdev_drv = {
+    .probe = mdev_drv_probe,
+    .remove = mdev_drv_remove
+};
+
+int mdev_drv_init(void)
 {
     int ret;
 
@@ -18,7 +32,7 @@ int __init mdev_drv_init(void)
     return 0;
 }
 
-void __exit mdev_drv_uninit(void) 
+void mdev_drv_uninit(void) 
 {
     driver_unregister(&mdev_drv.driver);
 }

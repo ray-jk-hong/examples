@@ -29,7 +29,7 @@ struct bus_type *mdev_get_bus_type(void)
     return &mdev_bus_type;
 }
 
-int __init mdev_bus_init(void)
+int mdev_bus_init(void)
 {
     int ret;
 
@@ -43,7 +43,7 @@ int __init mdev_bus_init(void)
 
 }
 
-void __exit mdev_bus_uninit(void) 
+void mdev_bus_uninit(void) 
 {
     pr_info("Bus uninit\n");
     bus_unregister(&mdev_bus_type);

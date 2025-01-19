@@ -8,8 +8,8 @@
 #include <linux/device.h>
 #include <linux/printk.h>
 
-int __init mdev_bus_init(void);
-void __exit mdev_bus_uninit(void);
+int mdev_bus_init(void);
+void mdev_bus_uninit(void);
 struct bus_type *mdev_get_bus_type(void);
 
 #endif
