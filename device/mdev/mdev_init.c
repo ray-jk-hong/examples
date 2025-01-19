@@ -1,4 +1,5 @@
 #include "mdev.h"
+#include "mtty.h"
 #include "mdev_bus.h"
 #include "mdev_driver.h"
 #include "mdev_device.h"
@@ -18,8 +19,16 @@ static int __init mdev_mod_init(void)
         return ret;
     }
 
-    ret = mdev_dev_init();
+    ret = mtty_init();
     if (ret != 0) {
+        mdev_drv_uninit();
+        mdev_bus_uninit();
+        return ret;
+    }
+
+    ret = mdev_dev_init(); // 设备创建的时候调用
+    if (ret != 0) {
+        mtty_uninit();
         mdev_drv_uninit();
         mdev_bus_uninit();
         return ret;
@@ -32,6 +41,7 @@ static int __init mdev_mod_init(void)
 static void __exit mdev_mod_exit(void) 
 {
     pr_info("Mdev exit\n");
+    mtty_uninit();
     mdev_dev_uninit();
     mdev_drv_uninit();
     mdev_bus_uninit();
