@@ -9,7 +9,7 @@
 struct cdev g_cdev[MAX_DEV_NUM];
 struct device *g_dev[MAX_DEV_NUM];
 
-static struct class* cdev_class;
+static struct class *cdev_class;
 static int cdev_major;
 
 static int cdev_open(struct inode *inode, struct file *file) 
@@ -48,6 +48,11 @@ static struct file_operations g_cdev_fops = {
     .write = cdev_write
 };
 
+static char *_cdev_devnode(struct device *dev, umode_t *mode)
+{
+    return kasprintf(GFP_KERNEL, "my_cdev/%s", dev_name(dev));
+}
+
 static int _cdev_init(void)
 {
     dev_t cdev_dev;
@@ -58,6 +63,7 @@ static int _cdev_init(void)
         printk(KERN_ERR "Class create fail.\n");
         return -ENODEV;
     }
+    cdev_class->devnode = _cdev_devnode;
 
     ret = alloc_chrdev_region(&cdev_dev, 0, MAX_DEV_NUM, "my_cdev");
     if (ret != 0) {
