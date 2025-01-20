@@ -48,8 +48,14 @@ static struct file_operations g_cdev_fops = {
     .write = cdev_write
 };
 
+#define CDEV_CLASS_MODE ((umode_t)(S_IRUGO|S_IWUGO))
+
 static char *_cdev_devnode(struct device *dev, umode_t *mode)
 {
+    if (mode != NULL) {
+        *mode = CDEV_CLASS_MODE;
+    }
+    /* Create devices in /dev/my_dev/ */
     return kasprintf(GFP_KERNEL, "my_cdev/%s", dev_name(dev));
 }
 
