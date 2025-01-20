@@ -41,7 +41,7 @@ int mtty_init(void)
         pr_err("Class create fail.\n");
         return -ENODEV;
     }
-    mtty_dev.devt = devt;
+    mtty_dev.dev.devt = devt;
     mtty_dev.dev.class = mtty_dev.mdev_class;
     mtty_dev.dev.release = mtty_dev_release;
     dev_set_name(&mtty_dev.dev, "%s", "my_mtty_device");
