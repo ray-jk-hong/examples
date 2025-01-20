@@ -31,18 +31,8 @@ static int mdev_dev_register(void)
 
 static void mdev_dev_unregister(void)
 {
-    device_unregister(&mdev_dev.dev);
+    device_del(&mdev_dev.dev);
 }
-
-static int mdev_dev_create(void)
-{
-    return 0;
-}
-
-static void mdev_dev_destroy(void)
-{
-}
-
 
 int mdev_dev_init(void)
 {
@@ -53,14 +43,6 @@ int mdev_dev_init(void)
         pr_err("Mdev dev register fail. (ret=%d)\n", ret);
         return ret;
     }
-
-    ret = mdev_dev_create();
-     if (ret != 0) {
-        mdev_dev_unregister();
-        pr_err("Mdev dev create fail. (ret=%d)\n", ret);
-        return ret;
-    }
-
     pr_info("Dev init\n");
     return 0;
 }
@@ -68,7 +50,6 @@ int mdev_dev_init(void)
 void mdev_dev_uninit(void) 
 {
     pr_info("Dev uninit\n");
-    mdev_dev_destroy();
     mdev_dev_unregister();
 }
 

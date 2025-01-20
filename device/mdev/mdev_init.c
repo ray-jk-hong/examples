@@ -41,8 +41,8 @@ static int __init mdev_mod_init(void)
 static void __exit mdev_mod_exit(void) 
 {
     pr_info("Mdev exit\n");
-    mtty_uninit();
     mdev_dev_uninit();
+    mtty_uninit();
     mdev_drv_uninit();
     mdev_bus_uninit();
 }
