@@ -3,6 +3,10 @@
 
 #include <pthread.h>
 
+#define likely(x)           __builtin_expect(!!(x), 1)
+#define unlikely(x)         __builtin_expect(!!(x), 0)
+#define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+
 struct uida {
     u32 min;
     u32 max;
@@ -20,8 +24,5 @@ void uida_free(struct uida *ida, u32 id);
 /* Alloc range. [min, max] */
 int uida_init(struct uida *ida, u32 min, u32 max);
 void uida_destroy(struct uida *ida);
-
-#define likely(x)           __builtin_expect(!!(x), 1)
-#define unlikely(x)         __builtin_expect(!!(x), 0)
 
 #endif
