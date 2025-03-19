@@ -3,9 +3,13 @@
 
 #include <pthread.h>
 
+#include <linux/errno.h>
+
 #define likely(x)           __builtin_expect(!!(x), 1)
 #define unlikely(x)         __builtin_expect(!!(x), 0)
 #define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+
+typedef unsigned int u32;
 
 struct uida {
     u32 min;
