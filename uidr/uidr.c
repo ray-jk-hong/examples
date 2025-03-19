@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
-#include <pthread.h>
 
 #include "uidr.h"
 

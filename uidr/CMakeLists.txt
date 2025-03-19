@@ -17,3 +17,9 @@ target_include_directories(uidr PUBLIC
 target_link_libraries(uidr PUBLIC
     pthread
 )
+
+target_compile_options(uidr PUBLIC
+    -O2
+    -Werror 
+    -Wall
+)

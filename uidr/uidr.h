@@ -5,9 +5,17 @@
 
 #include <linux/errno.h>
 
+#ifndef likely
 #define likely(x)           __builtin_expect(!!(x), 1)
+#endif
+
+#ifndef unlikely
 #define unlikely(x)         __builtin_expect(!!(x), 0)
+#endif
+
+#ifndef DIV_ROUND_UP
 #define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+#endif
 
 #ifndef u32
 typedef unsigned int u32;
