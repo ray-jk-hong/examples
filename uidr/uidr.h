@@ -9,7 +9,9 @@
 #define unlikely(x)         __builtin_expect(!!(x), 0)
 #define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
 
+#ifndef u32
 typedef unsigned int u32;
+#endif
 
 struct uida {
     u32 min;
