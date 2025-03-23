@@ -1,7 +1,7 @@
 KERN_DIR?= /lib/modules/$(shell uname -r)/build
 
 ifneq ($(KERNELRELEASE),)
-	obj-m := my_debugfs.o
+	obj-m := debugfs.o
     EXTRA_CFLAGS+=-I${PWD}
 else
 	PWD := $(shell pwd)
