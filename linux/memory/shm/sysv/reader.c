@@ -3,7 +3,7 @@
 #include <string.h>
 #include <sys/ipc.h>
 #include <stdio.h>
- 
+
 int main()
 {
 	key_t key = ftok("/dev/shm/myshm1", 0);
