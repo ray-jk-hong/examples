@@ -28,9 +28,12 @@
 
 #define FIXADDR_TOP             ((VMEMMAP_START - (32 * 1024 * 1024)))
 
+#define PAGE_END		        (_PAGE_END(VA_BITS_MIN))
+
 int main(int argc, char *argv[])
 {
     printf("PAGE_OFFSET=0x%lx\n", PAGE_OFFSET);
+    printf("PAGE_END=0x%lx\n", PAGE_END);
     printf("VMEMMAP_START=0x%lx\n", VMEMMAP_START);
     printf("VMEMMAP_SIZE=0x%lx\n", VMEMMAP_SIZE);
     printf("FIXADDR_TOP=0x%lx\n", FIXADDR_TOP);
