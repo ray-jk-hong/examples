@@ -22,6 +22,8 @@ static int __init my_wq_init(void)
     }
     INIT_DELAYED_WORK(&g_work, my_work);
     queue_delayed_work(g_wq, &g_work, 0);
+
+    pr_info("My wq init. %ps\n", my_work);
     return 0;
 }
 

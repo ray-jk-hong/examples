@@ -1,79 +1,107 @@
-#include <linux/types.h>
 #include <linux/module.h>
+#include <linux/init.h>
 #include <linux/blkdev.h>
+#include <linux/vmalloc.h>
 
-#define MAX_DEV_NUM 1
-#define BLKDEV_NAME "blkdev"
-#define BLKDEV_MINOR    0
+#define DEVICE_NAME "vblkdev"
+#define SECTOR_SIZE 512
+#define DEVICE_SIZE_SECTORS 2048  // 1MB设备
 
-struct blkdev {
-    int major;
-    dev_t devt;
-    struct gendisk *gd;
-    struct  request_queue *queue;
-} g_blkdev;
+static struct gendisk *vdisk;
+static struct request_queue *queue;
+static u8 *dev_data;
 
-static int _blkdev_init(struct blkdev *blkdev)
+static void vbdev_request(struct request_queue *q)
 {
-    dev_t devt;
-    int ret;
+    struct request *req;
+    
+    while ((req = blk_fetch_request(q)) != NULL) {
+        unsigned long start = blk_rq_pos(req) * SECTOR_SIZE;
+        unsigned long len = blk_rq_cur_bytes(req);
+        void *buffer = bio_data(req->bio);
+        
+        if (start + len > DEVICE_SIZE_SECTORS * SECTOR_SIZE) {
+            pr_err("Request out of range\n");
+            blk_mq_end_request(req, BLK_STS_IOERR);
+            continue;
+        }
+        
+        switch (req_op(req)) {
+            case REQ_OP_READ:
+                memcpy(buffer, dev_data + start, len);
+                break;
+            case REQ_OP_WRITE:
+                memcpy(dev_data + start, buffer, len);
+                break;
+            default:
+                pr_err("Unsupported operation\n");
+                blk_mq_end_request(req, BLK_STS_NOTSUPP);
+                continue;
+        }
+        
+        blk_mq_end_request(req, BLK_STS_OK);
+    }
+}
 
-    ret = alloc_chrdev_region(&devt, 0, MAX_DEV_NUM, BLKDEV_NAME);
-    if (ret != 0) {
-        return ret;
+static struct block_device_operations vbdev_fops = {
+    .owner = THIS_MODULE,
+};
+
+static int __init vbdev_init(void)
+{
+    // 分配设备内存
+    dev_data = vmalloc(DEVICE_SIZE_SECTORS * SECTOR_SIZE);
+    if (!dev_data)
+        return -ENOMEM;
+
+    // 创建请求队列
+    queue = blk_mq_init_sq_queue(&vbdev_tag_set, &vbdev_ops, 128, BLK_MQ_F_SHOULD_MERGE);
+    if (IS_ERR(queue)) {
+        vfree(dev_data);
+        return PTR_ERR(queue);
+    }
+    blk_queue_logical_block_size(queue, SECTOR_SIZE);
+
+    // 注册块设备
+    vdisk = blk_alloc_disk(NUMA_NO_NODE);
+    if (IS_ERR(vdisk)) {
+        blk_cleanup_queue(queue);
+        vfree(dev_data);
+        return PTR_ERR(vdisk);
     }
 
-    ret = register_blkdev(MAJOR(devt), BLKDEV_NAME);
-    if (ret != 0) {
-        unregister_chrdev_region(MKDEV(devt, 0), MAX_DEV_NUM);
-        return ret;
-    }
-    blkdev->devt = devt;
-    blkdev->major = MAJOR(devt); 
+    // 设置磁盘属性
+    strscpy(vdisk->disk_name, DEVICE_NAME, DISK_NAME_LEN);
+    vdisk->major = 0;  // 动态分配主设备号
+    vdisk->first_minor = 0;
+    vdisk->fops = &vbdev_fops;
+    vdisk->queue = queue;
+    set_capacity(vdisk, DEVICE_SIZE_SECTORS);
+
+    // 激活磁盘
+    add_disk(vdisk);
+
+    pr_info("Virtual block device initialized\n");
     return 0;
 }
 
-static void _blkdev_uninit(struct blkdev *blkdev)
+static void __exit vbdev_exit(void)
 {
-    unregister_blkdev(blkdev->major, BLKDEV_NAME);
-    unregister_chrdev_region(blkdev->devt, MAX_DEV_NUM);
-}
-
-static int blkdev_gd_init(struct blkdev *blkdev)
-{
-    return 0;
-}
-
-static void blkdev_gd_uninit(struct blkdev *blkdev)
-{
-
-}
-
-static int __init blkdev_init(void)
-{
-    int ret;
-
-    ret = _blkdev_init(&g_blkdev);
-    if (ret != 0) {
-        return ret;
+    if (vdisk) {
+        del_gendisk(vdisk);
+        put_disk(vdisk);
     }
-
-    ret = blkdev_gd_init(&g_blkdev);
-    if (ret != 0) {
-        _blkdev_uninit(&g_blkdev);
-        return ret;
-    }
-
-    return 0;
+    if (queue)
+        blk_cleanup_queue(queue);
+    if (dev_data)
+        vfree(dev_data);
+    
+    pr_info("Virtual block device removed\n");
 }
 
-static void __exit blkdev_exit(void)
-{
-    blkdev_gd_uninit(&g_blkdev);
-    _blkdev_uninit(&g_blkdev);
-}
+module_init(vbdev_init);
+module_exit(vbdev_exit);
 
-module_init(blkdev_init);
-module_exit(blkdev_exit);
-
-MODULE_LICENSE("Dual BSD/GPL");
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Your Name");
+MODULE_DESCRIPTION("Simple Virtual Block Device Driver");
